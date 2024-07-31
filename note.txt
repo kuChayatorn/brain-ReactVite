@@ -1,0 +1,18 @@
+      {/* <XR store={store}>
+        {/* <OrbitControls></OrbitControls> */}
+      {/* <fog attach="fog" args={['#a79', 8.5, 12]} /> */}
+      {/* <Rag rotation={[0, 0, 0.15]}>
+            <Carousel radius={4} count={4} />
+          </Rag> */}
+      {/* <Environment preset="dawn" background blur={0.5} /> */}
+      {/* <ScrollControls pages={4} infinite>
+          <Model url="/brain.gltf" handleCardIndex={handleCardIndex} />
+          <Card
+            key={cardIndex}
+            url={`/img${Math.floor(cardIndex % 10) + 1}_.jpg`}
+            position={[-3, -1, 0]}
+            rotation={[0, 0, 0]}
+            cardIndex={cardIndex}
+          />
+        </ScrollControls> */}
+      {/* </XR> */} */
