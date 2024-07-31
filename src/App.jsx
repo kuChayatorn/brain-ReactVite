@@ -27,12 +27,19 @@ function App() {
       </div>
       <Canvas camera={{ position: [50, 30, 30], fov: 55 }}>
         <XR store={store}>
-          <ambientLight />
-          <directionalLight position={[0, 0, 5]} />
-          <mesh>
-            <boxGeometry args={[1, 1, 1]} />
-            <meshStandardMaterial color="orange" />
-          </mesh>
+          {/* <OrbitControls></OrbitControls> */}
+          {/* <fog attach="fog" args={['#a79', 8.5, 12]} /> */}
+          <Environment preset="dawn" background blur={0.5} />
+          <ScrollControls pages={4} infinite>
+            <Model url="/brain.gltf" handleCardIndex={handleCardIndex} />
+            <Card
+              key={cardIndex}
+              url={`/img${Math.floor(cardIndex % 4) + 1}_.jpg`}
+              position={[-3, -1, 0]}
+              rotation={[0, 0, 0]}
+              cardIndex={cardIndex}
+            />
+          </ScrollControls>
         </XR>
       </Canvas>
     </div>
