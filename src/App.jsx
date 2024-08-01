@@ -1,15 +1,14 @@
 
-import { Environment, OrbitControls, ScrollControls } from '@react-three/drei'
+import { Environment, Float, OrbitControls, ScrollControls } from '@react-three/drei'
 import './App.css'
 import { Canvas } from '@react-three/fiber'
-import Carousel from './components/Carousel'
-import Rag from './components/Rag'
-import { div } from 'three/examples/jsm/nodes/Nodes.js'
-import Model from './components/Model'
+import Model from './components/Brain'
 import Card from './components/Card'
 import { useState } from 'react'
 import { XR, createXRStore } from '@react-three/xr'
 import * as THREE from 'three'
+import Carousel from './components/Carousel'
+import Rig from './components/Rig'
 
 
 
@@ -20,25 +19,21 @@ function App() {
   }
   const store = createXRStore()
   return (
-    <div style={{ width: '100vw', height: '100vh' }}>
+    <div style={{ width: '100vw', height: '100vh', overflow: 'hidden', position: 'fixed', top: 0, left: 0 }}>
       <div style={{ position: 'absolute', top: 10, left: 10, zIndex: '9999' }}>
         <button onClick={() => store.enterVR()}>Enter VR</button>
         <button onClick={() => store.enterAR()}>Enter AR</button>
       </div>
-      <Canvas camera={{ position: [50, 30, 30], fov: 55 }}>
+      <Canvas camera={{ position: [50, 30, 30], fov: 15 }}>
         <XR store={store}>
-          {/* <OrbitControls></OrbitControls> */}
+          {/* <OrbitControls/> */}
           {/* <fog attach="fog" args={['#a79', 8.5, 12]} /> */}
           <Environment preset="dawn" background blur={0.5} />
-          <ScrollControls pages={4} infinite>
-            <Model url="/brain.gltf" handleCardIndex={handleCardIndex} />
-            <Card
-              key={cardIndex}
-              url={`/img${Math.floor(cardIndex % 4) + 1}_.jpg`}
-              position={[-3, -1, 0]}
-              rotation={[0, 0, 0]}
-              cardIndex={cardIndex}
-            />
+          <ScrollControls pages={3} infinite>
+            <Rig>
+              <Model position={[0, 1, 0]} scale={0.8} handleCardIndex={handleCardIndex} />
+              <Carousel curCardIndex={cardIndex}/>
+            </Rig>
           </ScrollControls>
         </XR>
       </Canvas>

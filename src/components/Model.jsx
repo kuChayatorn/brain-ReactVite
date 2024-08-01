@@ -50,20 +50,6 @@ const Model = ({ url, handleCardIndex }) => {
 
   useFrame((state, delta) => {
     setScrolloff(scroll.offset >= 0 ? scroll.offset % 1 : (1 + scroll.offset) % 1)
-    // console.log(scrolloff)
-    gltf.scene.rotation.y = -scroll.offset * (Math.PI * 2); // Rotate contents
-    state.events.update(); // Raycasts every frame rather than on pointer-move
-    easing.damp3(
-      state.camera.position,
-      [-state.pointer.x * 2, state.pointer.y + 1.5, state.camera.position.z],
-      0.3,
-      delta
-    ); // Move camera
-    let po = gltf.scene.position
-    po.x = 0 - state.camera.position.x
-    po.y = 0
-    po.z = 10 - state.camera.position.z
-    state.camera.lookAt(po); // Look at brain position
   });
   // console.log(gltf)
   return <primitive object={gltf.scene} />;
