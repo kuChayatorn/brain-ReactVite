@@ -9,7 +9,7 @@ const Card = ({ url, ...props }) => {
     const [hovered, hover] = useState(false);
     const pointerOver = (e) => (e.stopPropagation(), hover(true));
     const pointerOut = () => hover(false);
-    const name = ["cerebellum", 'Left Brain', 'Spinal Core', 'Right Brain']
+    const name = ["Cerebellum", 'Left Brain', 'Spinal Core', 'Right Brain']
     useFrame((state, delta) => {
         easing.damp3(ref.current.scale, hovered ? 1.15 : 1, 0.1, delta);
         easing.damp(ref.current.material, 'radius', hovered ? 0.25 : 0.1, 0.2, delta);

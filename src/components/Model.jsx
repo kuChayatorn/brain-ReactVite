@@ -4,6 +4,7 @@ import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader.js'
 import { useFrame, useLoader } from '@react-three/fiber';
 import { easing } from 'maath'
 import * as THREE from 'three'
+import Carousel from './Carousel';
 
 const Model = ({ url, handleCardIndex }) => {
   const gltf = useLoader(GLTFLoader, url);
@@ -52,7 +53,7 @@ const Model = ({ url, handleCardIndex }) => {
     setScrolloff(scroll.offset >= 0 ? scroll.offset % 1 : (1 + scroll.offset) % 1)
   });
   // console.log(gltf)
-  return <primitive object={gltf.scene} />;
+  return <primitive object={gltf.scene}/>;
 }
 
 export default Model

@@ -1,18 +1,55 @@
-      {/* <XR store={store}>
-        {/* <OrbitControls></OrbitControls> */}
-      {/* <fog attach="fog" args={['#a79', 8.5, 12]} /> */}
-      {/* <Rag rotation={[0, 0, 0.15]}>
-            <Carousel radius={4} count={4} />
-          </Rag> */}
-      {/* <Environment preset="dawn" background blur={0.5} /> */}
-      {/* <ScrollControls pages={4} infinite>
-          <Model url="/brain.gltf" handleCardIndex={handleCardIndex} />
-          <Card
-            key={cardIndex}
-            url={`/img${Math.floor(cardIndex % 10) + 1}_.jpg`}
-            position={[-3, -1, 0]}
-            rotation={[0, 0, 0]}
-            cardIndex={cardIndex}
-          />
-        </ScrollControls> */}
-      {/* </XR> */} */
+import React, { useRef, useState } from 'react';
+import { Canvas } from '@react-three/fiber';
+import { OrbitControls } from '@react-three/drei';
+
+function RotatableBox() {
+  const meshRef = useRef();
+  const [isDragging, setIsDragging] = useState(false);
+  const [lastMousePosition, setLastMousePosition] = useState([0, 0]);
+
+  const onPointerDown = (event) => {
+    setIsDragging(true);
+    setLastMousePosition([event.clientX, event.clientY]);
+  };
+
+  const onPointerMove = (event) => {
+    if (isDragging) {
+      const [lastX, lastY] = lastMousePosition;
+      const deltaX = event.clientX - lastX;
+      const deltaY = event.clientY - lastY;
+
+      meshRef.current.rotation.y += deltaX * 0.01;
+      meshRef.current.rotation.x += deltaY * 0.01;
+
+      setLastMousePosition([event.clientX, event.clientY]);
+    }
+  };
+
+  const onPointerUp = () => {
+    setIsDragging(false);
+  };
+
+  return (
+    <mesh
+      ref={meshRef}
+      onPointerDown={onPointerDown}
+      onPointerMove={onPointerMove}
+      onPointerUp={onPointerUp}
+      onPointerOut={onPointerUp} // to handle the case when the mouse leaves the mesh area
+    >
+      <boxGeometry args={[1, 1, 1]} />
+      <meshStandardMaterial color="orange" />
+    </mesh>
+  );
+}
+
+export default function App() {
+  return (
+    <Canvas>
+      <ambientLight intensity={0.5} />
+      <directionalLight position={[5, 5, 5]} />
+      <RotatableBox />
+      <OrbitControls enableZoom={false} />
+    </Canvas>
+  );
+}
