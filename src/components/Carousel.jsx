@@ -5,7 +5,6 @@ import { useScroll } from '@react-three/drei'
 import { useFrame } from '@react-three/fiber'
 
 const Carousel = ({ curCardIndex, radius = 20, count = 4, origin = [0, 0, 20] }) => {
-    let scroll = useScroll()
     const ref = useRef()
 
     const rotatetionAtIndex = [Math.PI, Math.PI * 0.5, 0, Math.PI * 1.5]

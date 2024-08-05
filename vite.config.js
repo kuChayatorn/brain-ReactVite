@@ -7,4 +7,7 @@ export default defineConfig({
   plugins: [react(),
     viteBasicSslPlugin()
   ],
+  server: {
+    host: '0.0.0.0',
+  },
 })

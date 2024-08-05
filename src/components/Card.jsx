@@ -10,6 +10,11 @@ const Card = ({ url, ...props }) => {
     const pointerOver = (e) => (e.stopPropagation(), hover(true));
     const pointerOut = () => hover(false);
     const name = ["Cerebellum", 'Left Brain', 'Spinal Core', 'Right Brain']
+    const description = [
+        `The cerebellum is a region at the back of the brain that controls coordination and balance. It plays a crucial role in motor control and can affect cognitive functions and emotional regulation.`,
+        'The left hemisphere of the brain is typically associated with logical thinking, analytical skills, and language processing. It is often linked to tasks involving mathematics, science, and reasoning',
+        'The spinal cord is a long, tubular structure that runs from the base of the brain down the vertebral column. It transmits signals between the brain and the rest of the body, coordinating movement and reflexes',
+        'Right Brain']
     useFrame((state, delta) => {
         easing.damp3(ref.current.scale, hovered ? 1.15 : 1, 0.1, delta);
         easing.damp(ref.current.material, 'radius', hovered ? 0.25 : 0.1, 0.2, delta);
@@ -33,7 +38,7 @@ const Card = ({ url, ...props }) => {
                 {name[props.cardIndex]}
             </Text>
             <Text position={[3, -1, 0.5]}fontSize={0.2} color={'gold'} maxWidth={2.5} lineHeight={1} textAlign={'center'} whiteSpace={'wrap'} >
-                Lorem, ipsum dolor sit amet consectetur adipisicing elit. Sapiente nobis nemo sunt iusto porro aperiam quisquam sint temporibus. Omnis corrupti ut neque illum error aliquid fugiat possimus officiis. Aliquid, velit.
+                {description[props.cardIndex]}
             </Text>
         </group>
 
