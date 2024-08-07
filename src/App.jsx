@@ -8,26 +8,26 @@ import { XR, XROrigin, createXRStore } from '@react-three/xr'
 import * as THREE from 'three'
 import Carousel from './components/Carousel'
 import Rig from './components/Rig'
-import Ray from './components/Ray'
+import Teather from './Pages/Teather.jsx'
 
+
+const store = createXRStore({
+  controller: {
+    rayPointer: {
+      rayModel: {
+        color: "lime",
+        opacity: 1,
+        rayLength: 50,
+      }
+    }
+  }
+})
 
 function App() {
   const [cardIndex, setCardIndex] = useState(0)
   const handleCardIndex = (index) => {
     setCardIndex(index)
   }
-
-  const store = createXRStore({
-    controller: {
-      rayPointer: {
-        rayModel: {
-          color: "lime",
-          opacity: 1,
-          rayLength: 50,
-        }
-      }
-    }
-  })
 
   return (
     <div style={{ width: '100vw', height: '100vh', overflow: 'hidden', position: 'fixed', top: 0, left: 0 }}>
@@ -38,14 +38,16 @@ function App() {
       <Canvas camera={{ position: [50, 30, 10], fov: 55 }}>
         <XR store={store}>
           <XROrigin position={[0, 0, 10]} />
-          {/* <OrbitControls/> */}
+          <OrbitControls/>
           {/* <fog attach="fog" args={['#a79', 8.5, 1.2]} /> */}
-          <Environment preset="dawn" background blur={0.5} />
+          {/* <Environment preset="dawn" background blur={0.5} /> */}
           <ScrollControls pages={3} infinite>
-            <Rig>
-              <Model position={[0, 1, 0]} scale={0.8} />
+            {/* <Rig> */}
+              {/* <Model position={[0, 1, 0]} scale={0.8} handleCardIndex={handleCardIndex} />
+              <Carousel curCardIndex={cardIndex} /> */}
               {/* <Ray /> */}
-            </Rig>
+              <Teather/>
+            {/* </Rig> */}
           </ScrollControls>
         </XR>
       </Canvas>

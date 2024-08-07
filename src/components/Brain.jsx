@@ -11,13 +11,13 @@ import * as THREE from 'three'
 import Carousel from './Carousel';
 import { Arrow } from './Arrow';
 
-const Model = ({ ...props }) => {
+const Model = ({ handleCardIndex,...props}) => {
   const { nodes, materials } = useGLTF('/brain.gltf')
+  materials.BRAIN_TEXTURE_blinn2.color = new THREE.Color("#999999");
   const scroll = useScroll();
   const [scrollOffset, setScrollOffset] = useState(0);
   const meshRef = useRef();
   const [rotateOffset, setRotateOffset] = useState(0);
-  const [cardIndex, setCardIndex] = useState(0);
   const [hoveredItem, setHoveredItem] = useState(null);
 
   const mesh1 = useRef();
@@ -50,17 +50,20 @@ const Model = ({ ...props }) => {
     e.stopPropagation()
 
     if (hoveredItem?.material) {
+      console.log(materials.BRAIN_TEXTURE_blinn2.color.getHexString());
       hoveredItem.material = materials.BRAIN_TEXTURE_blinn2;
+      
+      // hoveredItem.material.color = new THREE.Color("#f4f4f4");
     }
 
     if (e?.object?.material && e.object.material.color) {
       const material = e.object.material.clone();
-      material.color.set("#ff0000");
+      material.color.set("#e08594");
       e.object.material = material;
     }
 
     setHoveredItem(e.object);
-    setCardIndex(Math.floor(index));
+    handleCardIndex(Math.floor(index));
   };
 
   return useMemo(() => {
@@ -75,8 +78,6 @@ const Model = ({ ...props }) => {
           <mesh
             ref={mesh1}
             onPointerDown={(e) => (handlePointerClick(0, e))}
-            // onPointerOver={(e) => (e.stopPropagation(),setHoveredModel1(true))}
-            // onPointerOut={() => setHoveredModel1(false)}
             geometry={nodes.Brain_Part_02.geometry}
             material={materials.BRAIN_TEXTURE_blinn2}
             position={[-0.793, 0.552, -0.096]}
@@ -85,8 +86,6 @@ const Model = ({ ...props }) => {
           <mesh
             ref={mesh2}
             onPointerDown={(e) => (handlePointerClick(1, e))}
-            // onPointerOver={(e) => (e.stopPropagation(),setHoveredModel2(true))}
-            // onPointerOut={() => setHoveredModel2(false)}
             geometry={nodes.Brain_Part_04.geometry}
             material={materials.BRAIN_TEXTURE_blinn2}
             position={[0.046, 1.873, 0.748]}
@@ -95,8 +94,6 @@ const Model = ({ ...props }) => {
           <mesh
             ref={mesh3}
             onPointerDown={(e) => (handlePointerClick(2, e))}
-            // onPointerOver={(e) => (e.stopPropagation(),setHoveredModel3(true))}
-            // onPointerOut={() => setHoveredModel3(false)}
             geometry={nodes.Brain_Part_05.geometry}
             material={materials.BRAIN_TEXTURE_blinn2}
             position={[-0.768, 1.283, 0.889]}
@@ -105,8 +102,6 @@ const Model = ({ ...props }) => {
           <mesh
             ref={mesh4}
             onPointerDown={(e) => (handlePointerClick(3, e))}
-            // onPointerOver={(e) => (e.stopPropagation(),setHoveredModel4(true))}
-            // onPointerOut={() => setHoveredModel4(false)}
             geometry={nodes.Brain_Part_06.geometry}
             material={materials.BRAIN_TEXTURE_blinn2}
             position={[-1.492, 1.873, 0.748]}
@@ -124,8 +119,6 @@ const Model = ({ ...props }) => {
         scale={0.5} rotation={[0, 0, Math.PI]}
         onClick={() => { setRotateOffset(meshRef.current.rotation.y - Math.PI * 0.25) }}
       />
-      <Carousel curCardIndex={cardIndex} />
-
     </group>
     );
   });
