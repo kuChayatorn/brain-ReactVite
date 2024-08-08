@@ -9,13 +9,16 @@ import * as THREE from 'three'
 import Carousel from './components/Carousel'
 import Rig from './components/Rig'
 import Ray from './components/Ray'
-
+import { XRDevice, metaQuest2 } from "iwer";
 
 function App() {
   const [cardIndex, setCardIndex] = useState(0)
   const handleCardIndex = (index) => {
     setCardIndex(index)
   }
+  const xrDevice = new XRDevice(metaQuest2);
+  // xrDevice.enableHandTracking(); // This is an example method, replace with the correct one if different
+  xrDevice.installRuntime();
 
   const store = createXRStore({
     controller: {
