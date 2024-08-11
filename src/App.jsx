@@ -8,10 +8,8 @@ import { XR, XROrigin, createXRStore } from '@react-three/xr'
 import * as THREE from 'three'
 import Carousel from './components/Carousel'
 import Rig from './components/Rig'
-<<<<<<< HEAD
 import Ray from './components/Ray'
 import { XRDevice, metaQuest2 } from "iwer";
-=======
 import ThreeMeshUI from 'three-mesh-ui'
 import Button from './components/Button'
 import Controller from './components/Controller'
@@ -19,6 +17,7 @@ import Text from './components/Text'
 import CourseNameContainer from './components/CourseNameConatiner'
 // import Teather from './Pages/teather'
 import { Root, Container } from "@react-three/uikit";
+import Uiit from './components/Uiit'
 
 extend(ThreeMeshUI)
 
@@ -35,7 +34,7 @@ const store = createXRStore({
     }
   }
 })
->>>>>>> de4eb9caa0b47e42b0d6f06290ae397fcb17db76
+
 
 function App() {
 
@@ -61,19 +60,13 @@ function App() {
           {/* <fog attach="fog" args={['#a79', 8.5, 1.2]} /> */}
           <Environment preset="dawn" background blur={0.5} />
           <ScrollControls pages={3} infinite>
+            <Uiit/>
             {/* <Rig> */}
             {/* <Model position={[0, 1, 0]} scale={0.8} handleCardIndex={handleCardIndex} />
               <Carousel curCardIndex={cardIndex} /> */}
             {/* <Ray /> */}
             {/* <Teather/> */}
-            <Root backgroundColor="red" sizeX={2} sizeY={1} flexDirection="row">
-              <Container flexGrow={1} margin={2} backgroundColor="green"
-                hover={{ position: [0, 0, 1] }}
-                active={{ backgroundColor: 'green' }}
-              />
 
-              <Container flexGrow={1} margin={2} backgroundColor="blue" />
-            </Root>
             {/* <Controller /> */}
             {/* <CourseNameContainer/> */}
             {/* <block
