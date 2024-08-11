@@ -57,9 +57,7 @@ const Teather = () => {
     //         shadowSide: THREE.FrontSide, // Disable shadows to reduce shadows
     //     });
     // }, [videoTexture]);
-    useFrame(() => {
-        ThreeMeshUI.update()
-    })
+
 
     const halfSphereGeometry = useMemo(() => new THREE.SphereGeometry(64, 64, 64, Math.PI / 2, Math.PI * 2), []);
     return (
