@@ -6,11 +6,9 @@ import CourseNameConatiner from './CourseNameConatiner'
 
 
 const PlayerInfoContainer = ({ courseName ="Hello"}) => {
-    
     useFrame(() => {
         ThreeMeshUI.update()
     })
-
     return (
         <block
             args={[

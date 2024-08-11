@@ -66,7 +66,85 @@ function App() {
               <Carousel curCardIndex={cardIndex} /> */}
             {/* <Ray /> */}
             {/* <Teather/> */}
-
+            <Root sizeX={6} sizeY={1.5} flexDirection="row" alignItems={"center"} justifyContent={"center"}
+              borderRadius={5}
+            >
+              <Container flexGrow={1} padding={20} backgroundColor="red" borderRadius={35}>
+                <Container margin={2} backgroundColor="green"
+                  width={50}
+                  height={50}
+                  onClick={() => console.log('back')}
+                  active={{ backgroundColor: 'green' }}
+                />
+                <Container margin={2} backgroundColor="green"
+                  width={50}
+                  height={50}
+                  onClick={() => console.log('play')}
+                  active={{ backgroundColor: 'green' }}
+                />
+                <Container margin={2} backgroundColor="green"
+                  width={50}
+                  height={50}
+                  onClick={() => console.log('back 10')}
+                  active={{ backgroundColor: 'green' }}
+                />
+                <Container margin={2} backgroundColor="green"
+                  width={50}
+                  height={50}
+                  onClick={() => console.log('next 10')}
+                  active={{ backgroundColor: 'green' }}
+                />
+                <Container margin={2} backgroundColor="green"
+                  width={250}
+                  height={50}
+                  
+                  justifyContent={"space-between"}
+                  backgroundOpacity={0}
+                  flexDirection={"column"}
+                >
+                  <Container backgroundColor="green"
+                    height={20}
+                    borderRadius={10}
+                    onClick={() => console.log('content name')}
+                    active={{ backgroundColor: 'green' }}
+                  />
+                  <Container backgroundColor="green"
+                    height={20}
+                    borderRadius={10}
+                    onClick={() => console.log('bar')}
+                    active={{ backgroundColor: 'green' }}
+                  />
+                </Container>
+                <Container margin={2} backgroundColor="green"
+                  width={50}
+                  height={50}
+                  onClick={() => console.log('mute')}
+                  active={{ backgroundColor: 'green' }}
+                />
+                <Container margin={2} backgroundColor="green"
+                  width={25}
+                  height={50}
+                  
+                  active={{ backgroundColor: 'green' }}
+                  justifyContent={"space-between"}
+                  backgroundOpacity={0}
+                  flexDirection={"column"}
+                >
+                  <Container backgroundColor="green"
+                    width={23}
+                    height={23}
+                    onClick={() => console.log('clicked')}
+                    active={{ backgroundColor: 'green' }}
+                  />
+                  <Container backgroundColor="green"
+                    width={23}
+                    height={23}
+                    onClick={() => console.log('clicked')}
+                    active={{ backgroundColor: 'green' }}
+                  />
+                </Container>
+              </Container>
+            </Root>
             {/* <Controller /> */}
             {/* <CourseNameContainer/> */}
             {/* <block
