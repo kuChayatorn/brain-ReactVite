@@ -8,6 +8,10 @@ import { XR, XROrigin, createXRStore } from '@react-three/xr'
 import * as THREE from 'three'
 import Carousel from './components/Carousel'
 import Rig from './components/Rig'
+<<<<<<< HEAD
+import Ray from './components/Ray'
+import { XRDevice, metaQuest2 } from "iwer";
+=======
 import ThreeMeshUI from 'three-mesh-ui'
 import Button from './components/Button'
 import Controller from './components/Controller'
@@ -31,6 +35,7 @@ const store = createXRStore({
     }
   }
 })
+>>>>>>> de4eb9caa0b47e42b0d6f06290ae397fcb17db76
 
 function App() {
 
@@ -39,6 +44,9 @@ function App() {
   const handleCardIndex = (index) => {
     setCardIndex(index)
   }
+  const xrDevice = new XRDevice(metaQuest2);
+  // xrDevice.enableHandTracking(); // This is an example method, replace with the correct one if different
+  xrDevice.installRuntime();
 
   return (
     <div style={{ width: '100vw', height: '100vh', overflow: 'hidden', position: 'fixed', top: 0, left: 0 }}>
