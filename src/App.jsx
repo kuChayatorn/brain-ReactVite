@@ -8,10 +8,8 @@ import { XR, XROrigin, createXRStore } from '@react-three/xr'
 import * as THREE from 'three'
 import Carousel from './components/Carousel'
 import Rig from './components/Rig'
-<<<<<<< HEAD
 import Ray from './components/Ray'
 import { XRDevice, metaQuest2 } from "iwer";
-=======
 import ThreeMeshUI from 'three-mesh-ui'
 import Button from './components/Button'
 import Controller from './components/Controller'
@@ -35,7 +33,6 @@ const store = createXRStore({
     }
   }
 })
->>>>>>> de4eb9caa0b47e42b0d6f06290ae397fcb17db76
 
 function App() {
 
