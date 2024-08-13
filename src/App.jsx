@@ -1,9 +1,9 @@
 
-import { Environment, Float, OrbitControls, ScrollControls } from '@react-three/drei'
+import { Environment, Float, OrbitControls, PerspectiveCamera, ScrollControls } from '@react-three/drei'
 import './App.css'
-import { Canvas, extend, useFrame } from '@react-three/fiber'
+import { Canvas, extend, useFrame, useThree } from '@react-three/fiber'
 import Model from './components/Brain'
-import { useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import { XR, XROrigin, createXRStore } from '@react-three/xr'
 import * as THREE from 'three'
 import { XRDevice, metaQuest2 } from "iwer";
@@ -26,10 +26,9 @@ const store = createXRStore({
 })
 
 function App() {
-
   const [cardIndex, setCardIndex] = useState(0)
   const [page, setPage] = useState(0);
-
+  const [configCamera,setConfigCamera] = useState({ position: [50, 30, 10], fov: 55 })
   const handlerPageIndex = (index) => {
     setPage(index);
   }
@@ -37,9 +36,15 @@ function App() {
   const handlerCardIndex = (index) => {
     setCardIndex(index)
   }
-  const xrDevice = new XRDevice(metaQuest2);
 
-  xrDevice.installRuntime();
+  useEffect(() => {
+    if(page==0){
+      setConfigCamera({ position: [0, 0, 10], fov: 55 })
+    }
+    else if(page==1){
+      setConfigCamera({ position: [0, 0, 10], fov: 75 })
+    }
+  }, [page])
 
   return (
     <div style={{ width: '100vw', height: '100vh', overflow: 'hidden', position: 'fixed', top: 0, left: 0 }}>
@@ -47,10 +52,11 @@ function App() {
         <button className='card' onClick={() => store.enterVR()}>Enter VR</button>
         {/* <button className='card' onClick={() => store.enterAR()}>Enter AR</button> */}
       </div>
-      <Canvas camera={{ position: [50, 30, 10], fov: 55 }}>
+      <Canvas style={{ width: '100%', height: '100%' }} >
+        <PerspectiveCamera makeDefault {...configCamera} />
         <XR store={store}>
           <XROrigin position={[0, 0, 10]} />
-          {(page == 0) && (
+          {page == 0 && (
             <ScrollControls pages={3} infinite>
               <ambientLight intensity={1} />
               <Environment preset="dawn" background blur={0.5} />
@@ -62,10 +68,11 @@ function App() {
               </Rig>
             </ScrollControls>
           )}
-          {page == 1 && (<>
-            <OrbitControls enableZoom={false} />
-            <Teather handlerPageIndex={handlerPageIndex} />
-          </>
+          {page == 1 && (
+            <>
+              <OrbitControls enableZoom={false} />
+              <Teather handlerPageIndex={handlerPageIndex} />
+            </>
           )}
         </XR>
       </Canvas>

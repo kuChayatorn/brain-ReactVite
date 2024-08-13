@@ -25,10 +25,10 @@ const Model = ({ handlerCardIndex,...props}) => {
   const mesh3 = useRef();
   const mesh4 = useRef();
 
-  const [hoveredModel1, setHoveredModel1] = useState(null);
-  const [hoveredModel2, setHoveredModel2] = useState(null);
-  const [hoveredModel3, setHoveredModel3] = useState(null);
-  const [hoveredModel4, setHoveredModel4] = useState(null);
+  // const [hoveredModel1, setHoveredModel1] = useState(null);
+  // const [hoveredModel2, setHoveredModel2] = useState(null);
+  // const [hoveredModel3, setHoveredModel3] = useState(null);
+  // const [hoveredModel4, setHoveredModel4] = useState(null);
 
 
 

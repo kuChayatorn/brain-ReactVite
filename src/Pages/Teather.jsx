@@ -2,6 +2,7 @@ import React, { useEffect, useMemo } from 'react';
 import { useFrame } from '@react-three/fiber';
 import * as THREE from 'three';
 import Controller from '../components/Controller';
+import { sRGBEncoding } from '@react-three/drei/helpers/deprecated';
 
 const Teather = ({handlerPageIndex}) => {
     const videoCourse = useMemo(() => {
@@ -31,45 +32,47 @@ const Teather = ({handlerPageIndex}) => {
         };
     }, [videoCourse]);
 
-    const videoTexture = useMemo(() => {
-        const texture = new THREE.VideoTexture(videoCourse);
-        // texture.minFilter = THREE.LinearFilter;
-        // texture.magFilter = THREE.LinearFilter;
-        // texture.format = THREE.RGBFormat;
-        // texture.generateMipmaps = false;
-        // texture.encoding = THREE.sRGBEncoding;
-        texture.minFilter = THREE.LinearFilter;
-        texture.magFilter = THREE.LinearFilter;
-        texture.format = THREE.RGBFormat;
-        texture.generateMipmaps = false;
-        texture.encoding = THREE.sRGBEncoding;
-        texture.needsUpdate = true;
-        texture.anisotropy = 16;
-        texture.side = THREE.BackSide;
-        texture.wrapS = THREE.RepeatWrapping;
-        texture.wrapT = THREE.RepeatWrapping;
-        return texture;
-    }, [videoCourse]);
-    
-
-    const videoMaterial = useMemo(() => {
-        return new THREE.MeshBasicMaterial({
-            // map: videoTexture,
-            // side: THREE.BackSide, // Ensures the texture is applied to the inside of the sphere\
-            map: videoTexture,
+    const CustomVideoMaterial = (videoElement) => {
+        const videoTexture = useMemo(() => {
+          const texture = new THREE.VideoTexture(videoElement);
+          texture.minFilter = THREE.LinearFilter;
+          texture.magFilter = THREE.LinearFilter;
+          texture.format = THREE.RGBFormat;
+          texture.encoding = sRGBEncoding;
+          return texture;
+        }, [videoElement]);
+      
+        const customShaderMaterial = useMemo(() => {
+          return new THREE.ShaderMaterial({
+            uniforms: {
+              uTexture: { value: videoTexture },
+              uBrightness: { value: 1.0 },
+            },
+            vertexShader: `
+              varying vec2 vUv;
+              void main() {
+                vUv = uv;
+                gl_Position = projectionMatrix * modelViewMatrix * vec4(position, 1.0);
+              }
+            `,
+            fragmentShader: `
+              uniform sampler2D uTexture;
+              uniform float uBrightness;
+              varying vec2 vUv;
+              void main() {
+                vec4 color = texture2D(uTexture, vUv);
+                color.rgb *= uBrightness;
+                gl_FragColor = color;
+              }
+            `,
             side: THREE.BackSide,
-            color: 0xffffff,
-            transparent: false,
-            opacity: 1,
-            blending: THREE.NormalBlending,
-            depthWrite: true,
-            depthTest: true,
-            toneMapped: false,
-            colorWrite: true,
-            vertexColors: THREE.NoColors,
-        });
-    }, [videoTexture]);
-
+            toneMapped: true,
+          });
+        }, [videoTexture]);
+      
+        return customShaderMaterial;
+      };
+      const customMaterial = CustomVideoMaterial(videoCourse);
     const halfSphereGeometry = useMemo(() => {
         return new THREE.SphereGeometry(64, 64, 64, Math.PI / 2, Math.PI * 2);
     }, []);
@@ -78,10 +81,10 @@ const Teather = ({handlerPageIndex}) => {
         <group>
             <mesh
                 geometry={halfSphereGeometry}
-                material={videoMaterial}
+                material={customMaterial}
                 position={[0, 0, 0]}
-                scale={[-1, 1, 1]}  // This will flip the mesh horizontally
-                rotation={[0, Math.PI / 2, 0]} // Rotate to correctly orient the video
+                scale={[-1, 1, 1]}  
+                rotation={[0, Math.PI / 2, 0]} 
             />
             <Controller videoElement={videoCourse} handlerPageIndex={handlerPageIndex}/> 
         </group>

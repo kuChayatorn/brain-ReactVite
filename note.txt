@@ -1,55 +1,40 @@
-import React, { useRef, useState } from 'react';
-import { Canvas } from '@react-three/fiber';
-import { OrbitControls } from '@react-three/drei';
+   //Last Video render
+   
+    const videoTexture = useMemo(() => {
+        const texture = new THREE.VideoTexture(videoCourse);
+        // texture.minFilter = THREE.LinearFilter;
+        // texture.magFilter = THREE.LinearFilter;
+        // texture.format = THREE.RGBFormat;
+        // texture.generateMipmaps = false;
+        // texture.encoding = THREE.sRGBEncoding;
+        texture.minFilter = THREE.LinearFilter;
+        texture.magFilter = THREE.LinearFilter;
+        texture.format = THREE.RGBFormat;
+        texture.generateMipmaps = false;
+        texture.encoding = THREE.sRGBEncoding;
+        texture.needsUpdate = true;
+        texture.anisotropy = 16;
+        texture.side = THREE.BackSide;
+        texture.wrapS = THREE.RepeatWrapping;
+        texture.wrapT = THREE.RepeatWrapping;
+        return texture;
+    }, [videoCourse]);
+    
 
-function RotatableBox() {
-  const meshRef = useRef();
-  const [isDragging, setIsDragging] = useState(false);
-  const [lastMousePosition, setLastMousePosition] = useState([0, 0]);
-
-  const onPointerDown = (event) => {
-    setIsDragging(true);
-    setLastMousePosition([event.clientX, event.clientY]);
-  };
-
-  const onPointerMove = (event) => {
-    if (isDragging) {
-      const [lastX, lastY] = lastMousePosition;
-      const deltaX = event.clientX - lastX;
-      const deltaY = event.clientY - lastY;
-
-      meshRef.current.rotation.y += deltaX * 0.01;
-      meshRef.current.rotation.x += deltaY * 0.01;
-
-      setLastMousePosition([event.clientX, event.clientY]);
-    }
-  };
-
-  const onPointerUp = () => {
-    setIsDragging(false);
-  };
-
-  return (
-    <mesh
-      ref={meshRef}
-      onPointerDown={onPointerDown}
-      onPointerMove={onPointerMove}
-      onPointerUp={onPointerUp}
-      onPointerOut={onPointerUp} // to handle the case when the mouse leaves the mesh area
-    >
-      <boxGeometry args={[1, 1, 1]} />
-      <meshStandardMaterial color="orange" />
-    </mesh>
-  );
-}
-
-export default function App() {
-  return (
-    <Canvas>
-      <ambientLight intensity={0.5} />
-      <directionalLight position={[5, 5, 5]} />
-      <RotatableBox />
-      <OrbitControls enableZoom={false} />
-    </Canvas>
-  );
-}
+    const videoMaterial = useMemo(() => {
+        return new THREE.MeshBasicMaterial({
+            // map: videoTexture,
+            // side: THREE.BackSide, // Ensures the texture is applied to the inside of the sphere\
+            map: videoTexture,
+            side: THREE.BackSide,
+            color: 0xffffff,
+            transparent: false,
+            opacity: 1,
+            blending: THREE.NormalBlending,
+            depthWrite: true,
+            depthTest: true,
+            toneMapped: false,
+            colorWrite: true,
+            vertexColors: THREE.NoColors,
+        });
+    }, [videoTexture]);
