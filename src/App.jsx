@@ -13,10 +13,11 @@ import { XRDevice, metaQuest2 } from "iwer";
 import ThreeMeshUI from 'three-mesh-ui'
 import Button from './components/Button'
 import Controller from './components/Controller'
-import Text from './components/Text'
 import CourseNameContainer from './components/CourseNameConatiner'
 // import Teather from './Pages/teather'
-import { Root, Container } from "@react-three/uikit";
+import { Root, Container, Image, Text, } from "@react-three/uikit";
+import { Slider } from './components/apfel/slider'
+import Teather from './Pages/Teather'
 
 extend(ThreeMeshUI)
 
@@ -33,6 +34,10 @@ const store = createXRStore({
     }
   }
 })
+<<<<<<< HEAD
+=======
+
+>>>>>>> f63d5a6ed4f4d2f30540883f6da5002881b4b718
 
 function App() {
 
@@ -54,110 +59,16 @@ function App() {
       <Canvas camera={{ position: [50, 30, 10], fov: 55 }}>
         <XR store={store}>
           <XROrigin position={[0, 0, 10]} />
-          <OrbitControls />
+          {/* <OrbitControls /> */}
           {/* <fog attach="fog" args={['#a79', 8.5, 1.2]} /> */}
           <Environment preset="dawn" background blur={0.5} />
           <ScrollControls pages={3} infinite>
-            {/* <Rig> */}
-            {/* <Model position={[0, 1, 0]} scale={0.8} handleCardIndex={handleCardIndex} />
-              <Carousel curCardIndex={cardIndex} /> */}
-            {/* <Ray /> */}
-            {/* <Teather/> */}
-            <Root sizeX={6} sizeY={1.5} flexDirection="row" alignItems={"center"} justifyContent={"center"}
-              borderRadius={5}
-            >
-              <Container flexGrow={1} padding={20} backgroundColor="red" borderRadius={35}>
-                <Container margin={2} backgroundColor="green"
-                  width={50}
-                  height={50}
-                  onClick={() => console.log('back')}
-                  active={{ backgroundColor: 'green' }}
-                />
-                <Container margin={2} backgroundColor="green"
-                  width={50}
-                  height={50}
-                  onClick={() => console.log('play')}
-                  active={{ backgroundColor: 'green' }}
-                />
-                <Container margin={2} backgroundColor="green"
-                  width={50}
-                  height={50}
-                  onClick={() => console.log('back 10')}
-                  active={{ backgroundColor: 'green' }}
-                />
-                <Container margin={2} backgroundColor="green"
-                  width={50}
-                  height={50}
-                  onClick={() => console.log('next 10')}
-                  active={{ backgroundColor: 'green' }}
-                />
-                <Container margin={2} backgroundColor="green"
-                  width={250}
-                  height={50}
-                  
-                  justifyContent={"space-between"}
-                  backgroundOpacity={0}
-                  flexDirection={"column"}
-                >
-                  <Container backgroundColor="green"
-                    height={20}
-                    borderRadius={10}
-                    onClick={() => console.log('content name')}
-                    active={{ backgroundColor: 'green' }}
-                  />
-                  <Container backgroundColor="green"
-                    height={20}
-                    borderRadius={10}
-                    onClick={() => console.log('bar')}
-                    active={{ backgroundColor: 'green' }}
-                  />
-                </Container>
-                <Container margin={2} backgroundColor="green"
-                  width={50}
-                  height={50}
-                  onClick={() => console.log('mute')}
-                  active={{ backgroundColor: 'green' }}
-                />
-                <Container margin={2} backgroundColor="green"
-                  width={25}
-                  height={50}
-                  
-                  active={{ backgroundColor: 'green' }}
-                  justifyContent={"space-between"}
-                  backgroundOpacity={0}
-                  flexDirection={"column"}
-                >
-                  <Container backgroundColor="green"
-                    width={23}
-                    height={23}
-                    onClick={() => console.log('clicked')}
-                    active={{ backgroundColor: 'green' }}
-                  />
-                  <Container backgroundColor="green"
-                    width={23}
-                    height={23}
-                    onClick={() => console.log('clicked')}
-                    active={{ backgroundColor: 'green' }}
-                  />
-                </Container>
-              </Container>
-            </Root>
+            <Rig>
+            {/* <Model position={[0, 1, 0]} scale={0.8} handleCardIndex={handleCardIndex} /> */}
+              {/* <Carousel curCardIndex={cardIndex} /> */}
+            <Teather/>
             {/* <Controller /> */}
-            {/* <CourseNameContainer/> */}
-            {/* <block
-                args={[
-                  {
-                    width: 1,
-                    height: 0.5,
-                    fontSize: 0.1,
-                    backgroundOpacity: 1,
-                    fontFamily: './Roboto-msdf.json',
-                    fontTexture: './Roboto-msdf.png'
-                  }
-                ]}>
-                <Text onClick={() => console.log("clicking")} /> */}
-            {/* </block> */}
-            {/* </Rig> */}
+            </Rig>
             {/* <Button onClick={() => console.log("clicking")} /> */}
           </ScrollControls>
         </XR>
