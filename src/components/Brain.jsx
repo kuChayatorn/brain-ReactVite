@@ -11,7 +11,7 @@ import * as THREE from 'three'
 import Carousel from './Carousel';
 import { Arrow } from './Arrow';
 
-const Model = ({ handleCardIndex,...props}) => {
+const Model = ({ handlerCardIndex,...props}) => {
   const { nodes, materials } = useGLTF('/brain.gltf')
   materials.BRAIN_TEXTURE_blinn2.color = new THREE.Color("#999999");
   const scroll = useScroll();
@@ -63,7 +63,7 @@ const Model = ({ handleCardIndex,...props}) => {
     }
 
     setHoveredItem(e.object);
-    handleCardIndex(Math.floor(index));
+    handlerCardIndex(Math.floor(index));
   };
 
   return useMemo(() => {

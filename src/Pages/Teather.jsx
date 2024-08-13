@@ -3,7 +3,7 @@ import { useFrame } from '@react-three/fiber';
 import * as THREE from 'three';
 import Controller from '../components/Controller';
 
-const Teather = () => {
+const Teather = ({handlerPageIndex}) => {
     const videoCourse = useMemo(() => {
         const video = document.createElement("video");
         video.id = "asset-video-1";
@@ -33,19 +33,40 @@ const Teather = () => {
 
     const videoTexture = useMemo(() => {
         const texture = new THREE.VideoTexture(videoCourse);
+        // texture.minFilter = THREE.LinearFilter;
+        // texture.magFilter = THREE.LinearFilter;
+        // texture.format = THREE.RGBFormat;
+        // texture.generateMipmaps = false;
+        // texture.encoding = THREE.sRGBEncoding;
         texture.minFilter = THREE.LinearFilter;
         texture.magFilter = THREE.LinearFilter;
         texture.format = THREE.RGBFormat;
         texture.generateMipmaps = false;
         texture.encoding = THREE.sRGBEncoding;
+        texture.needsUpdate = true;
+        texture.anisotropy = 16;
+        texture.side = THREE.BackSide;
+        texture.wrapS = THREE.RepeatWrapping;
+        texture.wrapT = THREE.RepeatWrapping;
         return texture;
     }, [videoCourse]);
     
 
     const videoMaterial = useMemo(() => {
         return new THREE.MeshBasicMaterial({
+            // map: videoTexture,
+            // side: THREE.BackSide, // Ensures the texture is applied to the inside of the sphere\
             map: videoTexture,
-            side: THREE.BackSide, // Ensures the texture is applied to the inside of the sphere
+            side: THREE.BackSide,
+            color: 0xffffff,
+            transparent: false,
+            opacity: 1,
+            blending: THREE.NormalBlending,
+            depthWrite: true,
+            depthTest: true,
+            toneMapped: false,
+            colorWrite: true,
+            vertexColors: THREE.NoColors,
         });
     }, [videoTexture]);
 
@@ -62,7 +83,7 @@ const Teather = () => {
                 scale={[-1, 1, 1]}  // This will flip the mesh horizontally
                 rotation={[0, Math.PI / 2, 0]} // Rotate to correctly orient the video
             />
-            <Controller videoElement={videoCourse}/> 
+            <Controller videoElement={videoCourse} handlerPageIndex={handlerPageIndex}/> 
         </group>
     );
 };

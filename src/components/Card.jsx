@@ -4,7 +4,7 @@ import * as THREE from 'three';
 import { easing } from 'maath';
 import { Image, Text } from '@react-three/drei';
 
-const Card = ({ url, ...props }) => {
+const Card = ({ url, handlerPageIndex, ...props }) => {
     const ref = useRef();
     const [hovered, hover] = useState(false);
     const pointerOver = (e) => (e.stopPropagation(), hover(true));
@@ -23,9 +23,10 @@ const Card = ({ url, ...props }) => {
 
     return (
         <group {...props}>
-            <Image position={[-3, -1, 0.5]} ref={ref} url={url} transparent side={THREE.DoubleSide} onPointerOver={pointerOver} onPointerOut={pointerOut} >
+            <Image position={[-3, -1, 0.5]} ref={ref} url={url} transparent side={THREE.DoubleSide} onPointerOver={pointerOver} onPointerOut={pointerOut} onClick={()=>handlerPageIndex(1)}>
                 <planeGeometry args={[2.5, 3]} />
-                <mesh position={[0, 0, 0.03]}>
+                <mesh position={[0, 0, 0.03]}
+                    onClick={()=>handlerPageIndex(1)}>
                     <planeGeometry args={[0.5, 0.5]} />
                     <meshStandardMaterial map={
                         new THREE.TextureLoader().load(
@@ -37,7 +38,7 @@ const Card = ({ url, ...props }) => {
             <Text position={[0, -1, 0.5]} fontSize={0.6} color={'#FFD700'} maxWidth={1} lineHeight={1} textAlign={'center'} whiteSpace={'wrap'} >
                 {name[props.cardIndex]}
             </Text>
-            <Text position={[3, -1, 0.5]}fontSize={0.2} color={'gold'} maxWidth={2.5} lineHeight={1} textAlign={'center'} whiteSpace={'wrap'} >
+            <Text position={[3, -1, 0.5]} fontSize={0.2} color={'gold'} maxWidth={2.5} lineHeight={1} textAlign={'center'} whiteSpace={'wrap'} >
                 {description[props.cardIndex]}
             </Text>
         </group>

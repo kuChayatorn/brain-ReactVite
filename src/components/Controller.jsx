@@ -4,7 +4,7 @@ import { Slider } from './apfel/slider';
 
 
 
-const Controller = ({ videoElement }) => {
+const Controller = ({ videoElement, handlerPageIndex }) => {
     const [playIconSrc, setPlayIconSrc] = useState('./icon/icon-play.png');
     const [muteIconSrc, setMuteIconSrc] = useState("./icon/icon-unmute.png");
     const [videoProgress, setVideoProgress] = useState(0);
@@ -60,7 +60,7 @@ const Controller = ({ videoElement }) => {
             this.ac = currentTime;
         },
         back: () => {
-            //return
+            handlerPageIndex(0);
         },
         play: (type = !controllerHandler.current.watching) => {
             console.log(`Playback state: ${type ? 'Playing' : 'Paused'}`);
@@ -111,7 +111,7 @@ const Controller = ({ videoElement }) => {
         sound: (type = (videoElementMount.muted ? false : true)) => {
             // console.log(`Sound state: ${type ? 'Muted' : 'Unmuted'}`);
             videoElementMount.muted = type;
-            type ? setMuteIconSrc("./icon/icon-mute.png"): setMuteIconSrc("./icon/icon-unmute.png") ;
+            type ? setMuteIconSrc("./icon/icon-mute.png") : setMuteIconSrc("./icon/icon-unmute.png");
         },
         speed: (type) => {
             // this.playSpeed = type ?
@@ -140,39 +140,43 @@ const Controller = ({ videoElement }) => {
         <Root sizeX={6} sizeY={1.5} flexDirection="row" alignItems={"center"} justifyContent={"center"}
             borderRadius={5}
         >
-            <Container flexGrow={1} padding={20} backgroundColor="grey" borderRadius={35} backgroundOpacity={0.4} >
-                <Container margin={2} backgroundColor="grey"
+            <Container flexGrow={1} padding={20} backgroundColor="black" borderRadius={35} backgroundOpacity={0.4} positionBottom={-300} transformRotateX={-30} justifyContent={'space-between'}
+            >
+                <Container margin={2} backgroundColor={"#444444"}
                     width={50}
                     height={50}
-                    borderRadius={25}
-                    onClick={(event) => { event.stopPropagation(); console.log('back') }}
+                    borderRadius={15}
+                    onPointerDown={(event) => { event.stopPropagation(); controllerHandler.current.back()}}
                     backgroundOpacity={0.8}
                     active={{ backgroundColor: 'grey' }}
                 >
                     <Image src="./icon/back_arrow.png" width={50} height={50} />
                 </Container>
 
-                <Container margin={2} backgroundColor="grey"
-                    width={50}
-                    height={50}
-                    borderRadius={25}
-                    backgroundOpacity={0}
-                    // onClick={() => console.log('back 10')}
-                    active={{ backgroundColor: 'grey' }}
-                >
-                    {/* <Image src="./icon/back_arrow.png" width={50} height={50} /> */}
-                </Container>
-                <Container margin={2} backgroundColor="grey"
+                {/* <Container margin={2} backgroundColor="grey"
                     width={50}
                     height={50}
                     borderRadius={15}
+                    backgroundOpacity={0}
+                    // onPointerDown={() => console.log('back 10')}
+                    active={{ backgroundColor: 'grey' }}
+                >
+                     <Image src="./icon/back_arrow.png" width={50} height={50} /> 
+                </Container> */}
+
+                <Container margin={2} backgroundColor={"#444444"}
+                    width={50}
+                    height={50}
+                    marginX={10}
+                    borderRadius={15}
                     justifyContent={"center"}
                     alignItems={"center"}
-                    onClick={(event) => { event.stopPropagation(); controllerHandler.current.play() }}
+                    onPointerDown={(event) => { event.stopPropagation(); controllerHandler.current.play() }}
                     active={{ backgroundColor: 'grey' }}
                 >
                     <Image src={playIconSrc} width={35} height={35} />
                 </Container>
+                {/*                 
                 <Container margin={2} backgroundColor="grey"
                     width={50}
                     height={50}
@@ -180,47 +184,49 @@ const Controller = ({ videoElement }) => {
                     backgroundOpacity={0}
                     active={{ backgroundColor: 'green' }}
                 >
-                    {/* <Image src="./icon/back_arrow.png" width={50} height={50} /> */}
-                </Container>
+                     <Image src="./icon/back_arrow.png" width={50} height={50} /> 
+                </Container> */}
+
                 <Container margin={2} backgroundColor="grey"
-                    width={250}
+                    width={360}
                     height={50}
                     justifyContent={"space-between"}
                     backgroundOpacity={0}
                     flexDirection={"column"}
                 >
-                    <Container backgroundColor="grey"
+                    <Container backgroundColor={"#444444"}
                         height={20}
                         borderRadius={10}
                         justifyContent={"center"}
-                        active={{ backgroundColor: 'grey' }}
                     >
                         <Text
                             color="white"
-                            fontSize={20}
+                            width={360}
+                            textAlign={"center"}
+                            fontSize={15}
+                            flexWrap={"wrap"}
                         >Content Name</Text>
                     </Container>
                     <Container
                         height={20}
                     >
                         <Slider
-                            color="white"
-                            width={250}
+                            width={360}
                             height={20}
                             borderRadius={15}
                             size="md"
                             value={videoProgress}
-                            onValueChange={(value) => {controllerHandler.current.seek(value)}}
+                            onValueChange={(value) => { controllerHandler.current.seek(value) }}
                         />
                     </Container>
                 </Container>
 
-                <Container margin={2} backgroundColor="grey"
+                <Container margin={2} backgroundColor={"#444444"}
                     width={50}
                     height={50}
-                    borderRadius={25}
-                    marginLeft={30}
-                    onClick={(event) => { event.stopPropagation(); controllerHandler.current.sound(); }}
+                    borderRadius={15}
+                    marginLeft={20}
+                    onPointerDown={(event) => { event.stopPropagation(); controllerHandler.current.sound(); }}
                     active={{ backgroundColor: 'grey' }}
                     justifyContent={"center"}
                     alignItems={"center"}
@@ -238,8 +244,8 @@ const Controller = ({ videoElement }) => {
               <Container backgroundColor="grey"
                 width={23}
                 height={23}
-                borderRadius={25}
-                onClick={() => console.log('clicked')}
+                borderRadius={15}
+                onPointerDown={() => console.log('clicked')}
                 active={{ backgroundColor: 'grey' }}
               >
                 <Image src="./icon/back_arrow.png" width={50} height={50} />
@@ -247,8 +253,8 @@ const Controller = ({ videoElement }) => {
               <Container backgroundColor="grey"
                 width={23}
                 height={23}
-                borderRadius={25}
-                onClick={() => console.log('clicked')}
+                borderRadius={15}
+                onPointerDown={() => console.log('clicked')}
                 active={{ backgroundColor: 'grey' }}
               >
                 <Image src="./icon/back_arrow.png" width={50} height={50} />

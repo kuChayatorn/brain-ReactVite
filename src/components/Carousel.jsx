@@ -4,7 +4,7 @@ import Card from './Card'
 import { useScroll } from '@react-three/drei'
 import { useFrame } from '@react-three/fiber'
 
-const Carousel = ({ curCardIndex, radius = 20, count = 4, origin = [0, 0, 20] }) => {
+const Carousel = ({ curCardIndex, handlerPageIndex, radius = 20, count = 4, origin = [0, 0, 20] }) => {
     const ref = useRef()
 
     const rotatetionAtIndex = [Math.PI, Math.PI * 0.5, 0, Math.PI * 1.5]
@@ -26,6 +26,7 @@ const Carousel = ({ curCardIndex, radius = 20, count = 4, origin = [0, 0, 20] })
                 ]}
                 rotation={[0, -rotationY, 0]}
                 cardIndex={i}
+                handlerPageIndex={handlerPageIndex}
             />
         ))}
     </group>
