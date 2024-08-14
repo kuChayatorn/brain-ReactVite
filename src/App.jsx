@@ -10,6 +10,7 @@ import { XRDevice, metaQuest2 } from "iwer";
 import Teather from './Pages/Teather'
 import Rig from './components/Rig'
 import Carousel from './components/Carousel'
+import BackGround from './components/BackGround'
 
 
 
@@ -28,9 +29,16 @@ const store = createXRStore({
 function App() {
   const [cardIndex, setCardIndex] = useState(0)
   const [page, setPage] = useState(0);
-  const [configCamera,setConfigCamera] = useState({ position: [50, 30, 10], fov: 55 })
+  const [configCamera, setConfigCamera] = useState({ position: [50, 30, 10], fov: 55 })
+  const [enableOrbitControls, setEnableOrbitControls] = useState(true)
   const handlerPageIndex = (index) => {
     setPage(index);
+  }
+
+  const handlerDisableOrbitControls = (type) => {
+    if (enableOrbitControls !== type) {
+      setEnableOrbitControls(type)
+    }
   }
 
   const handlerCardIndex = (index) => {
@@ -38,11 +46,11 @@ function App() {
   }
 
   useEffect(() => {
-    if(page==0){
+    if (page == 0) {
       setConfigCamera({ position: [0, 0, 10], fov: 55 })
     }
-    else if(page==1){
-      setConfigCamera({ position: [0, 0, 10], fov: 75 })
+    else if (page == 1) {
+      setConfigCamera({ position: [0, 0, 1], fov: 75 })
     }
   }, [page])
 
@@ -59,7 +67,7 @@ function App() {
           {page == 0 && (
             <ScrollControls pages={3} infinite>
               <ambientLight intensity={1} />
-              <Environment preset="dawn" background blur={0.5} />
+              <BackGround/>
               <Rig>
                 <group>
                   <Model position={[0, 1, 0]} scale={0.8} handlerCardIndex={handlerCardIndex} />
@@ -70,8 +78,8 @@ function App() {
           )}
           {page == 1 && (
             <>
-              <OrbitControls enableZoom={false} />
-              <Teather handlerPageIndex={handlerPageIndex} />
+              <OrbitControls enableZoom={false} enabled={enableOrbitControls} />
+              <Teather handlerPageIndex={handlerPageIndex} handlerDisableOrbitControls={handlerDisableOrbitControls} />
             </>
           )}
         </XR>

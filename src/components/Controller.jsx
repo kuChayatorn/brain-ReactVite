@@ -4,12 +4,13 @@ import { Slider } from './apfel/slider';
 
 
 
-const Controller = ({ videoElement, handlerPageIndex }) => {
+const Controller = ({ videoElement, handlerPageIndex, handlerDisableOrbitControls }) => {
     const [playIconSrc, setPlayIconSrc] = useState('./icon/icon-play.png');
     const [muteIconSrc, setMuteIconSrc] = useState("./icon/icon-unmute.png");
     const [videoProgress, setVideoProgress] = useState(0);
     const [videoElementMount, setVideoElementMount] = useState(videoElement);
     const videoDurationRef = useRef(0);
+    const isSeekingRef = useRef(false); // Track if the user is currently seeking
     // const [speed, setSpeed] = useState(1.0);
     useEffect(() => {
         setVideoElementMount(videoElement)
@@ -120,6 +121,7 @@ const Controller = ({ videoElement, handlerPageIndex }) => {
             // this.speedText.set({ content: `${this.playSpeed.toFixed(1)}` });
         },
         seek: (value) => {
+            isSeekingRef.current
             const duration = videoDurationRef.current;
             if (duration > 0) {
                 const newTime = (value / 100) * duration;
@@ -135,13 +137,24 @@ const Controller = ({ videoElement, handlerPageIndex }) => {
         },
     })
 
+    const handleSliderChange = (value) => {
+        isSeekingRef.current = true; // Set seeking to true when slider is being dragged
+        controllerHandler.current.seek(value);
+        handlerDisableOrbitControls(false);
+    };
+
+    const handleSliderChangeComplete = () => {
+        isSeekingRef.current = false; // Set seeking to false once the user stops dragging
+        handlerDisableOrbitControls(true);
+    };
+
     return (
         <group
-        position={[0, 0, 3]}>
+            position={[0, 0, -5]}>
             <Root sizeX={6} sizeY={1.5} flexDirection="row" alignItems={"center"} justifyContent={"center"}
                 borderRadius={5}
             >
-                <Container flexGrow={1} padding={20} backgroundColor="black" borderRadius={35} backgroundOpacity={0.4} positionBottom={-300} point={{ x: 1, y: 10 }} transformRotateX={-30} justifyContent={'space-between'}
+                <Container flexGrow={1} padding={20} backgroundColor="black" borderRadius={35} backgroundOpacity={0.4} positionBottom={-300} point={{ x: 1, y: 10 }}justifyContent={'space-between'}
                 >
                     <Container margin={2} backgroundColor={"#444444"}
                         width={50}
@@ -197,17 +210,21 @@ const Controller = ({ videoElement, handlerPageIndex }) => {
                         backgroundOpacity={0}
                         flexDirection={"column"}
                     >
-                        <Container backgroundColor={"#444444"}
-                            height={24}
+                        <Text
+                            backgroundColor={"#444444"}
+                            color="white"
                             borderRadius={10}
-                            justifyContent={"center"}
+                            fontSize={25}
+                            fontWeight={"bold"}
+                            borderColor={"#444444"}
+                            borderBend={0.3}
+                            borderWidth={4}
+                            height={20}
+                            textAlign={"center"}
+                            marginBottom={5}
                         >
-                            <Text
-                                color="white"
-                                textAlign={"center"}
-                                fontSize={20}
-                            >Learning Video</Text>
-                        </Container>
+                            Learning Video
+                        </Text>
                         <Container
                             height={20}
                         >
@@ -218,6 +235,9 @@ const Controller = ({ videoElement, handlerPageIndex }) => {
                                 size="md"
                                 value={videoProgress}
                                 onValueChange={(value) => { controllerHandler.current.seek(value) }}
+                                onPointerLeave={() => { isSeekingRef.current == true && (controllerHandler.current.seek(videoProgress) && handleSliderChangeComplete(true)) }}
+                            // onValueChange={(value) => handleSliderChange(value)}
+                            // onPointerDown={() => handleSliderChange(value)}
                             />
                         </Container>
                     </Container>
