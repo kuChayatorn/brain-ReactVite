@@ -21,7 +21,7 @@ const Teather = ({handlerPageIndex}) => {
 
     useEffect(() => {
         const player = dashjs.MediaPlayer().create();
-        player.initialize(videoCourse, "https://cdnapisec.kaltura.com/p/2910381/sp/291038100/playManifest/entryId/1_89wjhrnp/format/mpegdash/protocol/https", false);
+        player.initialize(videoCourse, "https://player.vimeo.com/external/986300466.mpd?s=67c4770b8102d7ff31dc86c428263dcde33387a7&logging=false", false);
         videoCourse.muted = false;
         // videoCourse.play();
 
