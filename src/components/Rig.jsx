@@ -13,14 +13,14 @@ const Rig = (props) => {
       state.events.update() // Raycasts every frame rather than on pointer-move
       easing.damp3(
           state.camera.position,
-          [-state.pointer.x * 2, state.pointer.y + 1.5, state.camera.position.z],
+          [-state.pointer.x * 0.5, state.pointer.y*0.1, state.camera.position.z],
           0.3,
           delta
         ); // Move camera
       let po = new THREE.Vector3();
-      po.x = 0 - state.camera.position.x
+      po.x = 0 
       po.y = 0
-      po.z = 10 - state.camera.position.z
+      po.z = 0 
       state.camera.lookAt(po);
     }
       })

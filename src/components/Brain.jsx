@@ -11,7 +11,7 @@ import * as THREE from 'three'
 import Carousel from './Carousel';
 import { Arrow } from './Arrow';
 
-const Model = ({ handlerCardIndex,...props}) => {
+const Model = ({ handlerCardIndex, ...props }) => {
   const { nodes, materials } = useGLTF('/brain.gltf')
   materials.BRAIN_TEXTURE_blinn2.color = new THREE.Color("#999999");
   const scroll = useScroll();
@@ -52,7 +52,7 @@ const Model = ({ handlerCardIndex,...props}) => {
     if (hoveredItem?.material) {
       console.log(materials.BRAIN_TEXTURE_blinn2.color.getHexString());
       hoveredItem.material = materials.BRAIN_TEXTURE_blinn2;
-      
+
       // hoveredItem.material.color = new THREE.Color("#f4f4f4");
     }
 
@@ -69,62 +69,92 @@ const Model = ({ handlerCardIndex,...props}) => {
   return useMemo(() => {
     return (
       <group>
-      <group
-        {...props}
-        rotation-y={scrollOffset * (2 * Math.PI)}
-      >
         <group
-          ref={meshRef}>
-          <mesh
-            ref={mesh1}
-            onPointerDown={(e) => (handlePointerClick(0, e))}
-            geometry={nodes.Brain_Part_02.geometry}
-            material={materials.BRAIN_TEXTURE_blinn2}
-            position={[-0.793, 0.552, -0.096]}
-            rotation={[1.584, 0, 0]}
-            scale={3.586} />
-          <mesh
-            ref={mesh2}
-            onPointerDown={(e) => (handlePointerClick(1, e))}
-            geometry={nodes.Brain_Part_04.geometry}
-            material={materials.BRAIN_TEXTURE_blinn2}
-            position={[0.046, 1.873, 0.748]}
-            rotation={[1.584, 0, 0]}
-            scale={3.586} />
-          <mesh
-            ref={mesh3}
-            onPointerDown={(e) => (handlePointerClick(2, e))}
-            geometry={nodes.Brain_Part_05.geometry}
-            material={materials.BRAIN_TEXTURE_blinn2}
-            position={[-0.768, 1.283, 0.889]}
-            rotation={[1.584, 0, 0]}
-            scale={3.586} />
-          <mesh
-            ref={mesh4}
-            onPointerDown={(e) => (handlePointerClick(3, e))}
-            geometry={nodes.Brain_Part_06.geometry}
-            material={materials.BRAIN_TEXTURE_blinn2}
-            position={[-1.492, 1.873, 0.748]}
-            rotation={[1.584, 0, 0]}
-            scale={3.586} />
+          {...props}
+          rotation-y={scrollOffset * (2 * Math.PI)}
+        >
+          <group
+            ref={meshRef}>
+            <mesh
+              ref={mesh1}
+              onPointerDown={(e) => (handlePointerClick(0, e))}
+              onPointerOver={(e) => {
+                e.stopPropagation();
+                document.body.style.cursor = 'pointer';
+              }}
+              onPointerOut={() => (document.body.style.cursor = 'default')}
+              geometry={nodes.Brain_Part_02.geometry}
+              material={materials.BRAIN_TEXTURE_blinn2}
+              position={[-0.793, 0.552, -0.096]}
+              rotation={[1.584, 0, 0]}
+              scale={3.586} />
+            <mesh
+              ref={mesh2}
+              onPointerDown={(e) => (handlePointerClick(1, e))}
+              onPointerOver={(e) => {
+                e.stopPropagation();
+                document.body.style.cursor = 'pointer';
+              }}
+              onPointerOut={() => (document.body.style.cursor = 'default')}
+              geometry={nodes.Brain_Part_04.geometry}
+              material={materials.BRAIN_TEXTURE_blinn2}
+              position={[0.046, 1.873, 0.748]}
+              rotation={[1.584, 0, 0]}
+              scale={3.586} />
+            <mesh
+              ref={mesh3}
+              onPointerDown={(e) => (handlePointerClick(2, e))}
+              onPointerOver={(e) => {
+                e.stopPropagation();
+                document.body.style.cursor = 'pointer';
+              }}
+              onPointerOut={() => (document.body.style.cursor = 'default')}
+              geometry={nodes.Brain_Part_05.geometry}
+              material={materials.BRAIN_TEXTURE_blinn2}
+              position={[-0.768, 1.283, 0.889]}
+              rotation={[1.584, 0, 0]}
+              scale={3.586} />
+            <mesh
+              ref={mesh4}
+              onPointerDown={(e) => (handlePointerClick(3, e))}
+              onPointerOver={(e) => {
+                e.stopPropagation();
+                document.body.style.cursor = 'pointer';
+              }}
+              onPointerOut={() => (document.body.style.cursor = 'default')}
+              geometry={nodes.Brain_Part_06.geometry}
+              material={materials.BRAIN_TEXTURE_blinn2}
+              position={[-1.492, 1.873, 0.748]}
+              rotation={[1.584, 0, 0]}
+              scale={3.586} />
+          </group>
         </group>
+        <Arrow
+          position={[4.6, 2, -0.096]}
+          scale={0.5}
+          onClick={() => { setRotateOffset(meshRef.current.rotation.y + Math.PI * 0.25) }}
+          onPointerOver={(e) => {
+            e.stopPropagation();
+            document.body.style.cursor = 'pointer';
+          }}
+          onPointerOut={() => (document.body.style.cursor = 'default')}
+        />
+        <Arrow
+          position={[-4.5, 2, -0.096]}
+          scale={0.5} rotation={[0, 0, Math.PI]}
+          onClick={() => { setRotateOffset(meshRef.current.rotation.y - Math.PI * 0.25) }}
+          onPointerOver={(e) => {
+            e.stopPropagation();
+            document.body.style.cursor = 'pointer';
+          }}
+          onPointerOut={() => (document.body.style.cursor = 'default')}
+        />
       </group>
-      <Arrow
-        position={[4.6, 2, -0.096]}
-        scale={0.5}
-        onClick={() => { setRotateOffset(meshRef.current.rotation.y + Math.PI * 0.25) }}
-      />
-      <Arrow
-        position={[-4.5, 2, -0.096]}
-        scale={0.5} rotation={[0, 0, Math.PI]}
-        onClick={() => { setRotateOffset(meshRef.current.rotation.y - Math.PI * 0.25) }}
-      />
-    </group>
     );
   });
 
 
-  
+
 }
 
 useGLTF.preload('/brain.gltf')
