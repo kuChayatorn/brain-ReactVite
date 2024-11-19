@@ -7,10 +7,10 @@ import { useEffect, useRef, useState } from 'react'
 import { XR, XROrigin, createXRStore } from '@react-three/xr'
 import * as THREE from 'three'
 import { XRDevice, metaQuest2 } from "iwer";
-import Teather from './Pages/Teather'
 import Rig from './components/Rig'
 import Carousel from './components/Carousel'
 import BackGround from './components/BackGround'
+import Teather from './Pages/TeatherPlane'
 
 
 
@@ -21,20 +21,28 @@ const store = createXRStore({
         color: "lime",
         opacity: 1,
         rayLength: 50,
+        lineMaterial: {
+          linewidth: 10,
+          vertexColors: false,
+        },
+        lineGeometry: {
+          type: "ConeBufferGeometry",
+          args: [0.01, 0.1, 32],
+        },
       }
     }
   }
 })
 
+// const store = createXRStore()
 function App() {
   const [cardIndex, setCardIndex] = useState(0)
   const [page, setPage] = useState(0);
-  const [configCamera, setConfigCamera] = useState({ position: [50, 30, 10], fov: 55 })
+  const [configCamera, setConfigCamera] = useState({ position: [50, 30, 10], fov: 110 })
   const [enableOrbitControls, setEnableOrbitControls] = useState(true)
   const handlerPageIndex = (index) => {
     setPage(index);
   }
-
   const handlerDisableOrbitControls = (type) => {
     if (enableOrbitControls !== type) {
       setEnableOrbitControls(type)
@@ -50,7 +58,7 @@ function App() {
       setConfigCamera({ position: [0, 0, 10], fov: 55 })
     }
     else if (page == 1) {
-      setConfigCamera({ position: [0, 0, 1], fov: 75 })
+      setConfigCamera({ position: [0, 0, 8], fov: 55 })
     }
   }, [page])
 
@@ -60,8 +68,8 @@ function App() {
         <button className='card' onClick={() => store.enterVR()}>Enter VR</button>
         {/* <button className='card' onClick={() => store.enterAR()}>Enter AR</button> */}
       </div>
-      <Canvas style={{ width: '100%', height: '100%' }} >
-        <PerspectiveCamera makeDefault {...configCamera} />
+      <Canvas style={{ width: '100%', height: '100%' }}>
+        <PerspectiveCamera makeDefault {...configCamera} near={0.1} far={1000} />
         <XR store={store}>
           <XROrigin position={[0, 0, 10]} />
           {page == 0 && (
@@ -77,12 +85,12 @@ function App() {
             </ScrollControls>
           )}
           {page == 1 && (
-            <>
+            <group>
               <ambientLight intensity={1} />
               <BackGround />
               <OrbitControls enableZoom={false} enabled={enableOrbitControls} />
-              <Teather handlerPageIndex={handlerPageIndex} handlerDisableOrbitControls={handlerDisableOrbitControls} />
-            </>
+              <Teather handlerPageIndex={handlerPageIndex} handlerDisableOrbitControls={handlerDisableOrbitControls} index={cardIndex} />
+            </group>
           )}
         </XR>
       </Canvas>

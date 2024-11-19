@@ -88,6 +88,7 @@ const Card = ({ url, handlerPageIndex, ...props }) => {
                     <Root
                         flexDirection="row"
                         borderRadius={5}
+                        layers={1}
                     >
                         <Container
                             transformTranslateZ={1}
@@ -129,7 +130,7 @@ const Card = ({ url, handlerPageIndex, ...props }) => {
                     {description[props.cardIndex]}
                 </Text> */}
 
-                <mesh
+                {/* <mesh
                     position={[5.5, -0.1, 0.5]}
                     onPointerOver={(e) => {
                         e.stopPropagation();
@@ -137,14 +138,14 @@ const Card = ({ url, handlerPageIndex, ...props }) => {
                     }}
                     onPointerOut={() => (document.body.style.cursor = 'default')}
                 >
-                    <circleGeometry args={[0.2, 32]} /> {/* Changed from planeGeometry to circleGeometry */}
+                    <circleGeometry args={[0.2, 32]} /> {/* Changed from planeGeometry to circleGeometry 
                     <meshStandardMaterial
                         color="grey"
                         style={{ border: ' solid white' }}
                         map={new THREE.TextureLoader().load('./icon/icon-unmute.png')}
                         transparent
                     />
-                </mesh>
+                </mesh> */}
             </group>
         </group>
 

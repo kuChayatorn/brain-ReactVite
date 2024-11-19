@@ -61,6 +61,9 @@ const Controller = ({ videoElement, handlerPageIndex, handlerDisableOrbitControl
         },
         back: () => {
             handlerPageIndex(0);
+            videoElementMount.pause();
+            videoElementMount.removeAttribute('src');
+            videoElementMount.load();
         },
         play: (type = !controllerHandler.current.watching) => {
             console.log(`Playback state: ${type ? 'Playing' : 'Paused'}`);
@@ -150,9 +153,11 @@ const Controller = ({ videoElement, handlerPageIndex, handlerDisableOrbitControl
 
     return (
         <group
-            position={[0, 0, -5]}>
+            position={[0, 0, 0]}
+        >
             <Root sizeX={6} sizeY={1.5} flexDirection="row" alignItems={"center"} justifyContent={"center"}
                 borderRadius={5}
+                transformRotateX={-20}
             >
                 <Container flexGrow={1} padding={20} backgroundColor="black" borderRadius={35} backgroundOpacity={0.4} positionBottom={-300} point={{ x: 1, y: 10 }}justifyContent={'space-between'}
                 >
