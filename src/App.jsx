@@ -67,7 +67,7 @@ function App() {
           {page == 0 && (
             <ScrollControls pages={3} infinite>
               <ambientLight intensity={1} />
-              <BackGround/>
+              <BackGround />
               <Rig>
                 <group>
                   <Model position={[0, 1, 0]} scale={0.8} handlerCardIndex={handlerCardIndex} />
@@ -78,6 +78,8 @@ function App() {
           )}
           {page == 1 && (
             <>
+              <ambientLight intensity={1} />
+              <BackGround />
               <OrbitControls enableZoom={false} enabled={enableOrbitControls} />
               <Teather handlerPageIndex={handlerPageIndex} handlerDisableOrbitControls={handlerDisableOrbitControls} />
             </>
