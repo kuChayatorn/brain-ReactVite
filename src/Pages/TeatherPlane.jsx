@@ -65,7 +65,7 @@ const Teather = ({ handlerPageIndex, handlerDisableOrbitControls, index }) => {
             const texture = new THREE.VideoTexture(videoCourse);
             texture.minFilter = THREE.LinearFilter;
             texture.magFilter = THREE.LinearFilter;
-            texture.format = THREE.RGBFormat;
+            texture.format = THREE.RGBAFormat;
             texture.encoding = THREE.sRGBEncoding;
             setVideoTexture(texture);
         }
